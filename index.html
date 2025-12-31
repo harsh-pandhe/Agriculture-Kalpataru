@@ -5,38 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalpataru - Agricultural Robotics | Build Your First Robot</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Join Kalpataru - A hands-on robotics championship for first-year students. Learn CAD design, electronics, and programming to build real agricultural robots.">
-    <meta name="keywords" content="robotics, agricultural robot, STEM education, CAD design, ESP32, robotics competition, first year students">
+    <meta name="description"
+        content="Join Kalpataru - A hands-on robotics championship for first-year students. Learn CAD design, electronics, and programming to build real agricultural robots.">
+    <meta name="keywords"
+        content="robotics, agricultural robot, STEM education, CAD design, ESP32, robotics competition, first year students">
     <meta name="author" content="Srushti Ashish Dhabale">
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Kalpataru - Agricultural Robotics Championship">
-    <meta property="og:description" content="Build Your First Agricultural Robot - A 10-task learning journey from zero to robotics hero.">
+    <meta property="og:description"
+        content="Build Your First Agricultural Robot - A 10-task learning journey from zero to robotics hero.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kalpataru-robotics.com">
-    
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌱</text></svg>">
-    
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌱</text></svg>">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Google Fonts: Inter & Space Grotesk -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
-        rel="stylesheet"
-        media="print"
-        onload="this.media='all'">
+        rel="stylesheet" media="print" onload="this.media='all'">
 
     <style>
         :root {
@@ -156,11 +160,13 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
+            opacity: 0;
         }
 
         .submenu.open {
-            max-height: 1000px;
-            transition: max-height 0.5s ease-in;
+            max-height: 2000px;
+            opacity: 1;
+            transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
         }
 
         .chevron {
@@ -249,12 +255,13 @@
 <body class="bg-slate-50 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
 
     <!-- Sidebar (Desktop) -->
-    <aside id="desktop-sidebar" class="hidden md:flex flex-col bg-white border-r border-gray-200 shadow-lg" role="navigation" aria-label="Main navigation">
+    <aside id="desktop-sidebar" class="hidden md:flex flex-col bg-white border-r border-gray-200 shadow-lg"
+        role="navigation" aria-label="Main navigation">
         <div
             class="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-slate-900 to-slate-800 text-white">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/30" aria-hidden="true">
+                <div class="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/30"
+                    aria-hidden="true">
                     <i class="fas fa-leaf text-sm"></i>
                 </div>
                 <div>
@@ -288,7 +295,8 @@
 
     <!-- Mobile Header -->
     <header
-        class="md:hidden fixed top-0 w-full glass-card border-b border-gray-200 z-30 px-4 py-3 flex justify-between items-center shadow-sm" role="banner">
+        class="md:hidden fixed top-0 w-full glass-card border-b border-gray-200 z-30 px-4 py-3 flex justify-between items-center shadow-sm"
+        role="banner">
         <div class="flex items-center gap-2">
             <i class="fas fa-leaf text-green-600 text-lg" aria-hidden="true"></i>
             <span class="font-bold text-slate-900">Kalpataru</span>
@@ -301,18 +309,33 @@
 
     <!-- Mobile Sidebar Drawer -->
     <div id="mobile-drawer"
-        class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+        class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 backdrop-blur-sm" role="dialog"
+        aria-modal="true" aria-label="Mobile navigation menu">
         <div class="bg-white w-4/5 max-w-sm h-full shadow-2xl transform transition-transform duration-300 -translate-x-full flex flex-col"
             id="drawer-content">
             <div class="p-5 border-b flex justify-between items-center bg-slate-50">
                 <span class="font-bold text-lg text-slate-800">Menu</span>
-                <button id="close-drawer" aria-label="Close menu" class="text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                <button id="close-drawer" aria-label="Close menu"
+                    class="text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
                     <i class="fas fa-times text-xl" aria-hidden="true"></i>
                 </button>
             </div>
-            <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="mobile-nav" role="navigation"
+                aria-label="Mobile navigation">
                 <!-- Nav Items Generated by JS -->
             </nav>
+            <div class="p-4 border-t border-gray-100 bg-slate-50">
+                <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                    <div
+                        class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs border border-indigo-100">
+                        S
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-700">Srushti Ashish Dhabale</p>
+                        <p class="text-[10px] text-slate-500">+91 7058361775</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -346,7 +369,8 @@
                                 <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                                 Innovation Track 2025
                             </div>
-                            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
+                            <h1
+                                class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
                                 Build Your First <br class="hidden sm:block">
                                 <span
                                     class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">Agricultural
@@ -356,12 +380,14 @@
                                 Join <strong>Kalpataru</strong> — a journey designed for first-year students to start
                                 from zero and grow into confident builders. Solving real-world problems with robotics.
                             </p>
-                            <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
-                                <button onclick="navigateToTask('subtask-1')" aria-label="Start learning journey with Subtask 1"
+                            <div
+                                class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
+                                <button onclick="navigateToTask('subtask-1')"
+                                    aria-label="Start learning journey with Subtask 1"
                                     class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-3.5 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] focus:outline-none focus:ring-2 focus:ring-white flex items-center justify-center gap-2">
                                     Start The Journey <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </button>
-                                <a href="#details" aria-label="Learn more about the program"
+                                <a href="https://www.thekalpataru.com" aria-label="Learn more about the program"
                                     class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-3.5 bg-transparent border border-white/20 text-white font-medium rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white transition-all text-center">
                                     Learn More
                                 </a>
@@ -720,6 +746,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-2')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Sensor Selection <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- SUBTASK 2: SENSORS -->
@@ -1010,6 +1044,14 @@
                             </table>
                         </div>
                     </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-3')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Microcontrollers <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- SUBTASK 3: MICROCONTROLLERS -->
@@ -1105,6 +1147,14 @@
                                     Pi Pico (RP2040)</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-4')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: ESP32 Blink <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -1205,6 +1255,14 @@ void loop() {
                             </div>
                         </div>
                     </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-5')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Fusion 360 <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- SUBTASK 5: FUSION 360 -->
@@ -1284,7 +1342,8 @@ void loop() {
                             </div>
                         </div>
 
-                        <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-8 md:mt-10 mb-4 md:mb-6">Why is it required in industry?</h3>
+                        <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-8 md:mt-10 mb-4 md:mb-6">Why is it
+                            required in industry?</h3>
                         <div class="space-y-3">
                             <!-- Item 1 -->
                             <div
@@ -1294,7 +1353,9 @@ void loop() {
                                     <i class="fas fa-stream text-base md:text-lg"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Complete Workflow (Idea → Product)</h4>
+                                    <h4
+                                        class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">
+                                        Complete Workflow (Idea → Product)</h4>
                                     <p class="text-sm text-slate-600 leading-relaxed">Companies need engineers who
                                         can handle 3D design, stress testing, motion testing, and manufacturing
                                         toolpaths in one environment.</p>
@@ -1309,7 +1370,9 @@ void loop() {
                                     <i class="fas fa-money-bill-wave text-base md:text-lg"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Manufacturing Cost & Time</h4>
+                                    <h4
+                                        class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">
+                                        Manufacturing Cost & Time</h4>
                                     <p class="text-sm text-slate-600 leading-relaxed">If parts aren't designed for
                                         manufacturability, money is wasted on CNC crashes, material waste, and
                                         redesigns. Fusion simulates failures <em>before</em> production.</p>
@@ -1324,7 +1387,9 @@ void loop() {
                                     <i class="fas fa-print text-base md:text-lg"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">3D Printing & CNC Standard</h4>
+                                    <h4
+                                        class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">
+                                        3D Printing & CNC Standard</h4>
                                     <p class="text-sm text-slate-600 leading-relaxed">Factories expect engineers to
                                         hand over STEP files, CNC toolpaths, and designs optimized for additive
                                         manufacturing. Fusion exports all of these directly.</p>
@@ -1339,7 +1404,9 @@ void loop() {
                                     <i class="fas fa-pencil-ruler text-base md:text-lg"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Engineering Drawings</h4>
+                                    <h4
+                                        class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">
+                                        Engineering Drawings</h4>
                                     <p class="text-sm text-slate-600 leading-relaxed">Machine shops don't accept
                                         "simple 3D models". They need proper drawings with tolerances, dimensions, and
                                         surface finish notes.</p>
@@ -1354,7 +1421,9 @@ void loop() {
                                     <i class="fas fa-check-double text-base md:text-lg"></i>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Product Testing</h4>
+                                    <h4
+                                        class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">
+                                        Product Testing</h4>
                                     <p class="text-sm text-slate-600 leading-relaxed">Product failure after
                                         manufacturing is a huge loss. Fusion simulates load, stress, heat, and motion to
                                         fix issues before launch.</p>
@@ -1385,6 +1454,14 @@ void loop() {
                                     Printing</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-6')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: ROS2 Architecture <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -1530,6 +1607,14 @@ void loop() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-7')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Gazebo Simulation <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -1680,6 +1765,14 @@ void loop() {
                             </div>
                         </div>
                     </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-8')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: CoppeliaSim <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- SUBTASK 8: COPPELIASIM -->
@@ -1786,6 +1879,14 @@ void loop() {
                                 <span class="font-bold text-slate-700">API support (Python, C++, ROS)</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-9')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Edge Impulse <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -1898,6 +1999,14 @@ void loop() {
                                 </p>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200 flex justify-end">
+                        <button onclick="navigateToTask('subtask-10')"
+                            class="px-6 md:px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all hover:shadow-lg flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Next: Requirements <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -2138,6 +2247,24 @@ void loop() {
                             </ol>
                         </div>
                     </div>
+
+                    <!-- Navigation Button -->
+                    <div class="mt-12 pt-8 border-t border-slate-200">
+                        <div
+                            class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-trophy text-5xl text-green-600 mb-3"></i>
+                                <h3 class="text-2xl font-bold text-slate-900 mb-2">Congratulations!</h3>
+                                <p class="text-slate-600 mb-6">You've completed all the learning tasks. Ready to submit
+                                    your work?</p>
+                            </div>
+                            <a href="https://thekalpataru.com/dashboard" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-3 px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl transition-all hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-500 text-lg">
+                                <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                Go to Dashboard
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -2170,6 +2297,7 @@ void loop() {
         function renderNav(containerId) {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
+            const prefix = containerId; // Use container ID as prefix for unique IDs
 
             navData.forEach(item => {
                 if (item.children) {
@@ -2179,7 +2307,7 @@ void loop() {
 
                     const parentBtn = document.createElement('button');
                     parentBtn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors';
-                    parentBtn.onclick = () => toggleSubmenu(item.id);
+                    parentBtn.onclick = () => toggleSubmenu(item.id, prefix);
 
                     const leftContent = document.createElement('div');
                     leftContent.className = 'flex items-center gap-3';
@@ -2187,7 +2315,7 @@ void loop() {
 
                     const chevron = document.createElement('i');
                     chevron.className = 'fas fa-chevron-down text-xs text-slate-400 chevron';
-                    chevron.id = `chevron-${item.id}`;
+                    chevron.id = `${prefix}-chevron-${item.id}`;
 
                     parentBtn.appendChild(leftContent);
                     parentBtn.appendChild(chevron);
@@ -2195,13 +2323,13 @@ void loop() {
 
                     // Submenu
                     const submenuDiv = document.createElement('div');
-                    submenuDiv.id = `submenu-${item.id}`;
+                    submenuDiv.id = `${prefix}-submenu-${item.id}`;
                     submenuDiv.className = 'submenu ml-9 border-l border-slate-200 pl-3 space-y-1 mt-1';
 
                     item.children.forEach(child => {
                         const link = document.createElement('a');
-                        link.className = 'block py-2 text-sm text-slate-500 hover:text-blue-600 hover:translate-x-1 transition-all cursor-pointer nav-link';
-                        link.id = `link-${child.id}`;
+                        link.className = 'block py-2 px-2 text-sm text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded transition-all cursor-pointer nav-link';
+                        link.id = `${prefix}-link-${child.id}`;
                         link.textContent = child.label;
                         link.onclick = () => {
                             navigateToTask(child.id);
@@ -2218,7 +2346,7 @@ void loop() {
                     // Direct Link
                     const link = document.createElement('a');
                     link.className = 'flex items-center gap-3 px-3 py-2.5 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors cursor-pointer nav-link';
-                    link.id = `link-${item.id}`;
+                    link.id = `${prefix}-link-${item.id}`;
                     link.innerHTML = `<i class="${item.icon} w-5 text-center text-slate-400"></i><span>${item.label}</span>`;
                     link.onclick = () => {
                         navigateToTask(item.id);
@@ -2230,11 +2358,13 @@ void loop() {
             });
         }
 
-        function toggleSubmenu(id) {
-            const submenu = document.getElementById(`submenu-${id}`);
-            const chevron = document.getElementById(`chevron-${id}`);
-            submenu.classList.toggle('open');
-            chevron.classList.toggle('rotate');
+        function toggleSubmenu(id, prefix) {
+            const submenu = document.getElementById(`${prefix}-submenu-${id}`);
+            const chevron = document.getElementById(`${prefix}-chevron-${id}`);
+            if (submenu && chevron) {
+                submenu.classList.toggle('open');
+                chevron.classList.toggle('rotate');
+            }
         }
 
         // View Switching Logic
@@ -2252,24 +2382,29 @@ void loop() {
                 document.getElementById('main-content').scrollTop = 0;
             }
 
-            // Update Active Link State
+            // Update Active Link State for both desktop and mobile
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active', 'text-blue-600', 'bg-blue-50', 'font-bold');
                 link.classList.add('text-slate-500');
             });
 
-            const activeLink = document.getElementById(`link-${viewId}`);
-            if (activeLink) {
-                activeLink.classList.add('active', 'text-blue-600', 'bg-blue-50', 'font-bold');
-                activeLink.classList.remove('text-slate-500');
-            }
+            // Update active state for both desktop and mobile links
+            ['desktop-nav', 'mobile-nav'].forEach(prefix => {
+                const activeLink = document.getElementById(`${prefix}-link-${viewId}`);
+                if (activeLink) {
+                    activeLink.classList.add('active', 'text-blue-600', 'bg-blue-50', 'font-bold');
+                    activeLink.classList.remove('text-slate-500');
+                }
+            });
 
             // Expand Task 1 accordion if navigating to a subtask from overview
             if (viewId.startsWith('subtask-')) {
-                const submenu = document.getElementById('submenu-task-1');
-                if (!submenu.classList.contains('open')) {
-                    toggleSubmenu('task-1');
-                }
+                ['desktop-nav', 'mobile-nav'].forEach(prefix => {
+                    const submenu = document.getElementById(`${prefix}-submenu-task-1`);
+                    if (submenu && !submenu.classList.contains('open')) {
+                        toggleSubmenu('task-1', prefix);
+                    }
+                });
             }
         }
 
