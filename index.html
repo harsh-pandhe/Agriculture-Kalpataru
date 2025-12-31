@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalpataru - Agricultural Robotics | Build Your First Robot</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Join Kalpataru - A hands-on robotics championship for first-year students. Learn CAD design, electronics, and programming to build real agricultural robots.">
+    <meta name="keywords" content="robotics, agricultural robot, STEM education, CAD design, ESP32, robotics competition, first year students">
+    <meta name="author" content="Srushti Ashish Dhabale">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Kalpataru - Agricultural Robotics Championship">
+    <meta property="og:description" content="Build Your First Agricultural Robot - A 10-task learning journey from zero to robotics hero.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kalpataru-robotics.com">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌱</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Typography Plugin -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet"
+        media="print"
+        onload="this.media='all'">
+
+    <style>
+        :root {
+            --sidebar-width: 20rem;
+            /* 320px / w-80 */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Nav Link Styles */
+        .nav-link {
+            position: relative;
+            transition: all 0.2s ease-in-out;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .nav-link.active {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 20px;
+            width: 3px;
+            background-color: #2563eb;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Sidebar Transition Logic */
+        #desktop-sidebar {
+            width: var(--sidebar-width);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 40;
+        }
+
+        /* Main content margin adjustment for fixed sidebar */
+        #main-content {
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: var(--sidebar-width);
+            width: auto;
+            /* Allow it to fill remaining space */
+        }
+
+        /* Collapsed State Classes */
+        body.sidebar-closed #desktop-sidebar {
+            transform: translateX(-100%);
+        }
+
+        body.sidebar-closed #main-content {
+            margin-left: 0 !important;
+        }
+
+        /* Mobile overrides */
+        @media (max-width: 768px) {
+            #main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Accordion Transitions */
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .submenu.open {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+
+        .chevron.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Content View Transition */
+        .content-view {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .content-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Timeline Styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid #e2e8f0;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -0.55rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #3b82f6;
+        }
+
+        /* Modern Table */
+        .modern-table th {
+            background-color: #f8fafc;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .modern-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .modern-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
+
+    <!-- Sidebar (Desktop) -->
+    <aside id="desktop-sidebar" class="hidden md:flex flex-col bg-white border-r border-gray-200 shadow-lg" role="navigation" aria-label="Main navigation">
+        <div
+            class="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center text-white shadow-lg shadow-green-500/30" aria-hidden="true">
+                    <i class="fas fa-leaf text-sm"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight tracking-tight">Kalpataru</h1>
+                    <p class="text-[10px] text-slate-300 font-medium tracking-wider uppercase">Robotics Champ.</p>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" aria-label="Toggle sidebar"
+                class="text-slate-400 hover:text-white transition-colors p-1 rounded-md hover:bg-white/10">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="desktop-nav">
+            <!-- Nav Items Generated by JS -->
+        </nav>
+
+        <div class="p-4 border-t border-gray-100 bg-slate-50">
+            <div class="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                <div
+                    class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 font-bold text-xs border border-indigo-100">
+                    S
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-slate-700">Srushti Ashish Dhabale</p>
+                    <p class="text-[10px] text-slate-500">+91 7058361775</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header
+        class="md:hidden fixed top-0 w-full glass-card border-b border-gray-200 z-30 px-4 py-3 flex justify-between items-center shadow-sm" role="banner">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-leaf text-green-600 text-lg" aria-hidden="true"></i>
+            <span class="font-bold text-slate-900">Kalpataru</span>
+        </div>
+        <button id="mobile-menu-toggle" aria-label="Open mobile menu" aria-expanded="false"
+            class="text-slate-600 p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+            <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+        </button>
+    </header>
+
+    <!-- Mobile Sidebar Drawer -->
+    <div id="mobile-drawer"
+        class="fixed inset-0 bg-slate-900/50 z-40 hidden transition-opacity duration-300 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Mobile navigation menu">
+        <div class="bg-white w-4/5 max-w-sm h-full shadow-2xl transform transition-transform duration-300 -translate-x-full flex flex-col"
+            id="drawer-content">
+            <div class="p-5 border-b flex justify-between items-center bg-slate-50">
+                <span class="font-bold text-lg text-slate-800">Menu</span>
+                <button id="close-drawer" aria-label="Close menu" class="text-slate-400 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                    <i class="fas fa-times text-xl" aria-hidden="true"></i>
+                </button>
+            </div>
+            <nav class="flex-1 overflow-y-auto p-4 space-y-1" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+                <!-- Nav Items Generated by JS -->
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 h-full overflow-y-auto pt-16 md:pt-0 relative bg-slate-50" id="main-content" role="main">
+        <!-- Sticky Toggle Button (Visible when sidebar collapsed) -->
+        <button onclick="toggleSidebar()" id="sidebar-expander" aria-label="Expand sidebar"
+            class="hidden fixed top-6 left-6 z-20 bg-white hover:bg-slate-50 text-slate-600 p-3 rounded-xl shadow-lg border border-slate-100 transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 group">
+            <i class="fas fa-bars text-lg group-hover:text-blue-600" aria-hidden="true"></i>
+        </button>
+
+        <div class="max-w-6xl mx-auto p-6 md:p-10 pb-32">
+
+            <!-- PAGE: OVERVIEW -->
+            <div id="page-overview" class="content-view active">
+
+                <!-- Hero Section -->
+                <div class="relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-10">
+                    <!-- Background Pattern -->
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="absolute -top-24 -right-24 w-96 h-96 bg-green-500 rounded-full blur-3xl"></div>
+                        <div class="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-0 right-1/3 w-80 h-80 bg-purple-500 rounded-full blur-3xl"></div>
+                    </div>
+
+                    <div
+                        class="relative p-8 md:p-16 text-center md:text-left z-10 flex flex-col md:flex-row items-center gap-10">
+                        <div class="flex-1">
+                            <div
+                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-green-300 text-xs font-bold uppercase tracking-wider mb-6">
+                                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                                Innovation Track 2025
+                            </div>
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 leading-tight">
+                                Build Your First <br class="hidden sm:block">
+                                <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-300">Agricultural
+                                    Robot</span>
+                            </h1>
+                            <p class="text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-xl leading-relaxed">
+                                Join <strong>Kalpataru</strong> — a journey designed for first-year students to start
+                                from zero and grow into confident builders. Solving real-world problems with robotics.
+                            </p>
+                            <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
+                                <button onclick="navigateToTask('subtask-1')" aria-label="Start learning journey with Subtask 1"
+                                    class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-3.5 bg-white text-slate-900 font-bold rounded-xl hover:bg-slate-100 transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(255,255,255,0.3)] focus:outline-none focus:ring-2 focus:ring-white flex items-center justify-center gap-2">
+                                    Start The Journey <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                                <a href="#details" aria-label="Learn more about the program"
+                                    class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-3.5 bg-transparent border border-white/20 text-white font-medium rounded-xl hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white transition-all text-center">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hidden lg:block w-80 relative">
+                            <!-- Abstract Robot Graphic Placeholder -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-tr from-green-500 to-blue-500 rounded-2xl rotate-3 opacity-20 blur-lg">
+                            </div>
+                            <div
+                                class="relative bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                                    <span class="text-white font-bold">System Status</span>
+                                    <span class="flex h-2 w-2 relative">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                    </span>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-500 w-3/4"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-slate-400">
+                                        <span>Sensors Active</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-green-500 w-1/2"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs text-slate-400">
+                                        <span>Target Identified</span>
+                                        <span>50%</span>
+                                    </div>
+                                </div>
+                                <div class="mt-6 p-4 bg-slate-900/50 rounded-lg font-mono text-xs text-green-400">
+                                    > Initializing Task 1...<br>
+                                    > Loading Modules...<br>
+                                    > Ready to Build.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="details" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+                    <div
+                        class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                        <div
+                            class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="text-base md:text-lg font-bold text-slate-900 mb-2">Team Format</h3>
+                        <p class="text-slate-500 text-sm">Teams of 5 sharing responsibilities across design, coding, and
+                            testing.</p>
+                    </div>
+                    <div
+                        class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                        <div
+                            class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-base md:text-lg font-bold text-slate-900 mb-2">10-Task Track</h3>
+                        <p class="text-slate-500 text-sm">A carefully ordered sequence from CAD design to final arena
+                            run.</p>
+                    </div>
+                    <div
+                        class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group sm:col-span-2 md:col-span-1">
+                        <div
+                            class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                            <i class="fas fa-hammer"></i>
+                        </div>
+                        <h3 class="text-base md:text-lg font-bold text-slate-900 mb-2">Build Real</h3>
+                        <p class="text-slate-500 text-sm">Top teams receive hardware kits to build the physical robot.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-16">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-slate-900 mb-4 md:mb-6">Your Learning Path</h2>
+                        <div class="space-y-0">
+                            <!-- Timeline Item -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="font-bold text-slate-800 text-base md:text-lg">Understand The Challenge</h4>
+                                <p class="text-slate-500 text-sm mt-1">Grasp the fruit-picking problem and basic robot
+                                    architecture.</p>
+                            </div>
+                            <!-- Timeline Item -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="font-bold text-slate-800 text-base md:text-lg">Design & Prototyping</h4>
+                                <p class="text-slate-500 text-sm mt-1">Create chassis, arm, and gripper concepts using
+                                    Fusion 360.</p>
+                            </div>
+                            <!-- Timeline Item -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="font-bold text-slate-800 text-base md:text-lg">Electronics & Code</h4>
+                                <p class="text-slate-500 text-sm mt-1">Program ESP32 to control motors and read sensor
+                                    data.</p>
+                            </div>
+                            <!-- Timeline Item -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <h4 class="font-bold text-slate-800 text-base md:text-lg">Simulation & Deployment</h4>
+                                <p class="text-slate-500 text-sm mt-1">Simulate behavior, then test pick-and-drop on
+                                    real targets.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-indigo-900 rounded-3xl p-6 md:p-8 text-white flex flex-col justify-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16">
+                        </div>
+
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 z-10">Why Join Kalpataru?</h3>
+                        <div class="space-y-3 md:space-y-4 z-10">
+                            <div class="flex gap-3 md:gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-base md:text-lg">Not Just Theory</h5>
+                                    <p class="text-indigo-200 text-sm">Every concept you learn is applied to a real
+                                        robot immediately.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 md:gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-base md:text-lg">Outcome Focused</h5>
+                                    <p class="text-indigo-200 text-sm">Don't just attend workshops. Build a
+                                        portfolio-worthy project.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 md:gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-base md:text-lg">Rewards</h5>
+                                    <p class="text-indigo-200 text-sm">Gadgets, accessories, and hardware kits for top
+                                        performers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center py-10 border-t border-slate-200">
+                    <p class="text-slate-500 italic mb-6">"Most first-year students wait for 'the right time' to start
+                        doing real engineering work. The right time is the moment you decide to begin."</p>
+                    <button onclick="navigateToTask('subtask-1')"
+                        class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition-colors shadow-lg">
+                        Go to Task 1
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- SUBTASK 1: FUNDAMENTALS -->
+            <div id="page-subtask-1" class="content-view">
+                <div class="mb-8 border-b border-gray-200 pb-4">
+                    <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask 1</span>
+                    <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Fundamentals of Robotics</h1>
+                </div>
+
+                <div class="prose prose-slate max-w-none">
+                    <p class="text-lg text-slate-600 mb-6">
+                        Robotics is the study of how to design, build, control, and use robots. A robot is any machine
+                        that can sense, think, and act in the real world—either automatically or under human control.
+                        <br>
+                        Robotics combines mechanical engineering, electronics, computer science, and control systems.
+                    </p>
+
+                    <!-- 1. Main Components -->
+                    <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">1. Main Components of a Robot <span
+                            class="text-sm font-normal text-slate-500">(Every robot has 5 core parts)</span></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose mb-8">
+                        <!-- A. Structure -->
+                        <div
+                            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-cubes"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">A. Structure (Mechanical Body)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">The physical frame of the robot.</p>
+                            <p class="text-xs text-slate-500 mt-2"><strong>Examples:</strong> wheels, arms, joints,
+                                chassis, gears, motors.</p>
+                        </div>
+
+                        <!-- B. Sensors -->
+                        <div
+                            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">B. Sensors (To Sense)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-2">Sensors give information to the robot.</p>
+                            <ul class="text-xs text-slate-500 space-y-1 list-disc list-inside">
+                                <li>Ultrasonic → distance</li>
+                                <li>IR → line or obstacle</li>
+                                <li>Color sensor → fruit sorting</li>
+                                <li>IMU → orientation, tilt</li>
+                                <li>Cameras → vision</li>
+                            </ul>
+                        </div>
+
+                        <!-- C. Actuators -->
+                        <div
+                            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">C. Actuators (To Move)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-2">Parts that create motion.</p>
+                            <ul class="text-xs text-slate-500 space-y-1 list-disc list-inside">
+                                <li>DC motors → wheels</li>
+                                <li>Servo motors → precise angle control</li>
+                                <li>Stepper motors → exact rotation steps</li>
+                                <li>Linear actuators → pushing/pulling</li>
+                            </ul>
+                        </div>
+
+                        <!-- D. Controller -->
+                        <div
+                            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">D. Controller (Robot Brain)</h4>
+                            </div>
+                            <p class="text-sm text-slate-600 mb-2">Electronics that process data and make decisions.
+                                Runs the program.</p>
+                            <div class="flex gap-2 mt-2">
+                                <span class="px-2 py-1 bg-slate-100 rounded text-xs font-mono">ESP32</span>
+                                <span class="px-2 py-1 bg-slate-100 rounded text-xs font-mono">Arduino</span>
+                                <span class="px-2 py-1 bg-slate-100 rounded text-xs font-mono">Raspberry Pi</span>
+                            </div>
+                        </div>
+
+                        <!-- E. Power System -->
+                        <div
+                            class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow md:col-span-2">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                    <i class="fas fa-battery-full"></i>
+                                </div>
+                                <h4 class="font-bold text-slate-900">E. Power System</h4>
+                            </div>
+                            <p class="text-sm text-slate-600">Supplies energy.</p>
+                            <div class="mt-2 text-xs text-slate-500 grid grid-cols-2 gap-4">
+                                <div><strong>Batteries:</strong> Li-ion, LiPo, AA</div>
+                                <div><strong>Circuits:</strong> Buck converters, regulators</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. How a Robot Works -->
+                    <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">2. How a Robot Works (Sense → Think → Act)
+                    </h3>
+                    <div
+                        class="bg-slate-100 p-6 rounded-xl flex flex-col md:flex-row justify-between items-start gap-4 not-prose mb-8">
+                        <div class="flex-1 bg-white p-4 rounded-lg shadow-sm h-full w-full">
+                            <span class="block font-bold text-lg text-blue-700 mb-1">1. SENSE</span>
+                            <p class="text-sm text-slate-600 mb-2">The robot collects data from sensors.</p>
+                            <div class="text-xs bg-slate-50 p-2 rounded border border-slate-100 text-slate-500">
+                                <strong>Example:</strong> Ultrasonic measures distance.
+                            </div>
+                        </div>
+
+                        <div class="hidden md:flex h-full items-center text-slate-300"><i
+                                class="fas fa-chevron-right text-2xl"></i></div>
+                        <div class="md:hidden w-full flex justify-center text-slate-300"><i
+                                class="fas fa-chevron-down text-2xl"></i></div>
+
+                        <div class="flex-1 bg-white p-4 rounded-lg shadow-sm h-full w-full">
+                            <span class="block font-bold text-lg text-purple-700 mb-1">2. THINK</span>
+                            <p class="text-sm text-slate-600 mb-2">Microcontroller processes data and decides.</p>
+                            <div class="text-xs bg-slate-50 p-2 rounded border border-slate-100 text-slate-500">
+                                <strong>Example:</strong> If distance < 10 cm → stop robot. </div>
+                            </div>
+
+                            <div class="hidden md:flex h-full items-center text-slate-300"><i
+                                    class="fas fa-chevron-right text-2xl"></i></div>
+                            <div class="md:hidden w-full flex justify-center text-slate-300"><i
+                                    class="fas fa-chevron-down text-2xl"></i></div>
+
+                            <div class="flex-1 bg-white p-4 rounded-lg shadow-sm h-full w-full">
+                                <span class="block font-bold text-lg text-green-700 mb-1">3. ACT</span>
+                                <p class="text-sm text-slate-600 mb-2">Sends signals to motors/actuators.</p>
+                                <div class="text-xs bg-slate-50 p-2 rounded border border-slate-100 text-slate-500">
+                                    <strong>Example:</strong> Motor stops, servo moves, buzzer beeps.
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-sm text-slate-500 italic mb-8">This loop runs continuously.</p>
+
+                        <!-- 3. Importance -->
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">3. Importance of Robotics</h3>
+                        <div class="grid md:grid-cols-2 gap-8 not-prose">
+                            <div>
+                                <h4 class="font-bold text-slate-700 mb-3">Applications</h4>
+                                <ul class="space-y-2 text-sm text-slate-600">
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-tractor text-green-500 w-5"></i> Agriculture (sorting,
+                                        picking)</li>
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-heartbeat text-red-500 w-5"></i> Medical (surgery,
+                                        prosthetics)</li>
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-industry text-slate-500 w-5"></i> Industry (assembly lines)
+                                    </li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-car text-blue-500 w-5"></i>
+                                        Transportation (autonomous vehicles)</li>
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-rocket text-purple-500 w-5"></i> Defense & Space</li>
+                                </ul>
+                            </div>
+                            <div class="bg-yellow-50 p-5 rounded-xl border border-yellow-100">
+                                <h4 class="font-bold text-yellow-800 mb-2"><i class="fas fa-lemon mr-2"></i>In Fruit
+                                    Sorting</h4>
+                                <p class="text-sm text-slate-700 mb-4">Robotics helps identify fruit color (ripeness),
+                                    sort faster, and reduce human error.</p>
+
+                                <h5 class="font-bold text-xs text-yellow-800 uppercase tracking-wide mb-2">A
+                                    Fruit-Sorting Robot Uses:</h5>
+                                <ul class="text-sm space-y-1 text-slate-700">
+                                    <li>• <strong>Color sensor</strong> → detect fruit ripeness</li>
+                                    <li>• <strong>Ultrasonic</strong> → detect fruit arrival</li>
+                                    <li>• <strong>Servo</strong> → push fruit into bin</li>
+                                    <li>• <strong>ESP32</strong> → brain for decisions</li>
+                                    <li>• <strong>Motors</strong> → move conveyor/wheels</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 2: SENSORS -->
+                <div id="page-subtask-2" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            2</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Sensor Selection & Rationale</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-4">
+                            A sensor is an electronic device that detects changes in the environment and converts them
+                            into electrical signals that a robot or microcontroller (like ESP32/Arduino) can understand.
+                        </p>
+                        <p class="text-slate-600">
+                            To study and understand the purpose, selection, and working principles of the main sensors
+                            used in a fruit-picking robot. These sensors enable the robot to detect ripe fruits based on
+                            colour, follow a fixed path between plant rows, and avoid obstacles while navigating.
+                        </p>
+                        <div class="bg-slate-50 border-l-4 border-indigo-500 p-4 mt-4">
+                            <p class="font-bold text-slate-700 mb-1">Why Do Robots Need Sensors?</p>
+                            <p class="text-sm text-slate-600">Robots use sensors to avoid obstacles, detect objects,
+                                measure distance, sense color, follow lines, and detect movement. Without sensors, a
+                                robot is blind and cannot react to the environment.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-slate-800 mb-6">The Three Essential Sensors</h3>
+
+                    <div class="space-y-12">
+                        <!-- Sensor 1: Color -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div class="bg-slate-50 border-b border-slate-100 px-6 py-4 flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded bg-white border border-slate-200 flex items-center justify-center text-indigo-500">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900">1. Colour Sensor (TCS34725)</h3>
+                                    <p class="text-xs text-slate-500">Detecting Ripe Fruits</p>
+                                </div>
+                            </div>
+                            <div class="p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-8 mb-6">
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-2">
+                                            Purpose</h4>
+                                        <p class="text-sm text-slate-600 mb-4">Identifies the colour of fruits to
+                                            determine which are ripe (yellow) and which are unripe (green). The picking
+                                            mechanism activates only for yellow fruits.</p>
+
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-2">
+                                            Working Principle</h4>
+                                        <p class="text-sm text-slate-600 mb-2">Shines white light onto the fruit.
+                                            Photodiodes with RGB filters measure reflected light.</p>
+                                        <ul
+                                            class="text-xs text-slate-500 space-y-1 list-disc list-inside bg-slate-50 p-3 rounded">
+                                            <li>High Red + High Green + Low Blue → <span
+                                                    class="text-yellow-600 font-bold">Yellow (Ripe)</span></li>
+                                            <li>Low Red + High Green + Low Blue → <span
+                                                    class="text-green-600 font-bold">Green (Unripe)</span></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-2">Reason
+                                            for Selection</h4>
+                                        <ul class="text-sm text-slate-600 space-y-2 mb-4">
+                                            <li><i class="fas fa-check text-green-500 mr-2"></i> Detects wide range of
+                                                colours via RGB photodiodes.</li>
+                                            <li><i class="fas fa-check text-green-500 mr-2"></i> Digital frequency
+                                                output is easy to read.</li>
+                                            <li><i class="fas fa-check text-green-500 mr-2"></i> Works well under
+                                                varying lighting (sunlight/indoor).</li>
+                                        </ul>
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-2">Key
+                                            Features</h4>
+                                        <div class="text-xs text-slate-500 grid grid-cols-2 gap-2">
+                                            <div><strong>Output:</strong> Frequency (Digital)</div>
+                                            <div><strong>Voltage:</strong> 3V – 5V</div>
+                                            <div><strong>Interface:</strong> Digital Pins</div>
+                                            <div><strong>Range:</strong> 1–3 cm</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sensor 2: Line -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div class="bg-slate-50 border-b border-slate-100 px-6 py-4 flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded bg-white border border-slate-200 flex items-center justify-center text-slate-700">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900">2. IR Line Sensors (HW-201)</h3>
+                                    <p class="text-xs text-slate-500">Following the Path</p>
+                                </div>
+                            </div>
+                            <div class="p-6 md:p-8">
+                                <p class="text-sm text-slate-600 mb-6">
+                                    Uses two IR reflective sensors (Left/Right) to follow a black line. White surfaces
+                                    reflect IR (Output 1), while black lines absorb IR (Output 0).
+                                </p>
+
+                                <div class="overflow-x-auto rounded-lg border border-slate-200 mb-6">
+                                    <table class="modern-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Left Sensor</th>
+                                                <th>Right Sensor</th>
+                                                <th>Robot Action</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-900 text-white rounded text-xs font-mono">0</span>
+                                                </td>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-900 text-white rounded text-xs font-mono">0</span>
+                                                </td>
+                                                <td class="font-bold text-green-600">Move Forward</td>
+                                                <td class="text-sm text-slate-500">Both sensors on black line</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-900 text-white rounded text-xs font-mono">0</span>
+                                                </td>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-100 text-gray-800 border rounded text-xs font-mono">1</span>
+                                                </td>
+                                                <td class="font-bold text-amber-600">Turn Right</td>
+                                                <td class="text-sm text-slate-500">Line on left only</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-100 text-gray-800 border rounded text-xs font-mono">1</span>
+                                                </td>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-900 text-white rounded text-xs font-mono">0</span>
+                                                </td>
+                                                <td class="font-bold text-amber-600">Turn Left</td>
+                                                <td class="text-sm text-slate-500">Line on right only</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-100 text-gray-800 border rounded text-xs font-mono">1</span>
+                                                </td>
+                                                <td><span
+                                                        class="px-2 py-1 bg-gray-100 text-gray-800 border rounded text-xs font-mono">1</span>
+                                                </td>
+                                                <td class="font-bold text-red-500">Stop</td>
+                                                <td class="text-sm text-slate-500">Line Lost (both see white)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-600">
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 mb-1">Reason for Selection</h4>
+                                        <ul class="list-disc list-inside text-xs space-y-1">
+                                            <li>Simple, inexpensive, fast response.</li>
+                                            <li>Easy to integrate.</li>
+                                            <li>Works in indoor/outdoor/greenhouse.</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 mb-1">Key Features</h4>
+                                        <div class="text-xs grid grid-cols-2 gap-2">
+                                            <span><strong>Output:</strong> Digital (0/1)</span>
+                                            <span><strong>Voltage:</strong> 3.3V – 5V</span>
+                                            <span><strong>Range:</strong> 1–3 cm</span>
+                                            <span><strong>Interface:</strong> Digital Input</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sensor 3: Ultrasonic -->
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                            <div class="bg-slate-50 border-b border-slate-100 px-6 py-4 flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 rounded bg-white border border-slate-200 flex items-center justify-center text-blue-500">
+                                    <i class="fas fa-wave-square"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-900">3. Ultrasonic Sensor (HC-SR04)</h3>
+                                    <p class="text-xs text-slate-500">Detecting Obstacles & Measuring Distance</p>
+                                </div>
+                            </div>
+                            <div class="p-6 md:p-8">
+                                <div class="grid md:grid-cols-2 gap-8 items-start">
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-3">
+                                            Working Principle</h4>
+                                        <ul class="space-y-3 text-sm text-slate-600 mb-4">
+                                            <li class="flex items-start gap-3">
+                                                <span
+                                                    class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold mt-0.5">1</span>
+                                                <span><strong>Transmitter (Trig)</strong> emits 40kHz ultrasonic
+                                                    pulse.</span>
+                                            </li>
+                                            <li class="flex items-start gap-3">
+                                                <span
+                                                    class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold mt-0.5">2</span>
+                                                <span>Pulse hits object and reflects back (Echo).</span>
+                                            </li>
+                                            <li class="flex items-start gap-3">
+                                                <span
+                                                    class="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold mt-0.5">3</span>
+                                                <span><strong>Receiver (Echo)</strong> detects reflected wave. Time is
+                                                    measured.</span>
+                                            </li>
+                                        </ul>
+                                        <div
+                                            class="p-3 bg-slate-50 border border-slate-200 rounded font-mono text-xs text-slate-700 text-center">
+                                            Distance = (Time × Speed of Sound) / 2
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-3">Logic
+                                            & Application</h4>
+                                        <div class="space-y-2 mb-4">
+                                            <div
+                                                class="flex items-center justify-between text-sm p-2 bg-red-50 rounded border border-red-100">
+                                                <span class="text-slate-700">Dist < Safe Limit</span>
+                                                        <span class="text-red-700 font-bold text-xs">STOP / AVOID</span>
+                                            </div>
+                                            <div
+                                                class="flex items-center justify-between text-sm p-2 bg-green-50 rounded border border-green-100">
+                                                <span class="text-slate-700">Dist in Target Range</span>
+                                                <span class="text-green-700 font-bold text-xs">PICK FRUIT</span>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-2">Key
+                                            Features</h4>
+                                        <div class="text-xs text-slate-500 grid grid-cols-2 gap-2">
+                                            <div><strong>Range:</strong> 2cm - 400cm</div>
+                                            <div><strong>Accuracy:</strong> ±3mm</div>
+                                            <div><strong>Voltage:</strong> 5V DC</div>
+                                            <div><strong>Signal:</strong> Digital Pulse</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Table -->
+                    <div class="mt-12">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4">Summary Table</h3>
+                        <div class="overflow-x-auto rounded-lg border border-slate-200">
+                            <table class="modern-table text-sm">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th>Sensor</th>
+                                        <th>Function</th>
+                                        <th>Working Principle</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold">TCS3200 Color</td>
+                                        <td>Detect ripe/unripe</td>
+                                        <td>Reflected RGB light intensity → Frequency</td>
+                                        <td>Accurate, stable output.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">IR Line (x2)</td>
+                                        <td>Follow path</td>
+                                        <td>IR reflection diff (Black vs White)</td>
+                                        <td>Simple, fast, low cost.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">HC-SR04 Ultrasonic</td>
+                                        <td>Detect obstacles</td>
+                                        <td>Ultrasonic pulse echo time</td>
+                                        <td>Reliable non-contact, good range.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 3: MICROCONTROLLERS -->
+                <div id="page-subtask-3" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            3</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">What are Microcontrollers?</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none">
+                        <p class="text-lg text-slate-600 mb-6">
+                            A microcontroller is a small computer built on a single chip that is designed to control
+                            electronic devices automatically. It has everything needed inside it — processor, memory,
+                            and input/output pins — so it can read signals from sensors and then control things like
+                            motors, LEDs, displays, etc.
+                        </p>
+                        <p class="text-slate-600 mb-6">
+                            It works by continuously running the program stored inside it to perform a specific task,
+                            like:
+                        </p>
+                        <ul
+                            class="text-sm text-slate-600 list-disc list-inside bg-white p-4 rounded-lg border border-slate-200 mb-8 shadow-sm">
+                            <li>Turning a fan on/off based on temperature.</li>
+                            <li>Making a robot move when a sensor detects an object.</li>
+                            <li>Controlling washing machine cycles.</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">What Is Inside a Microcontroller?</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 not-prose mb-8">
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-microchip text-indigo-500"></i> CPU (Processor)</h4>
+                                <p class="text-sm text-slate-500">The thinking part — runs your program.</p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-memory text-indigo-500"></i> Memory</h4>
+                                <ul class="text-xs text-slate-500 space-y-1">
+                                    <li><strong>Flash Memory:</strong> stores your code.</li>
+                                    <li><strong>RAM:</strong> stores temporary data while running.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-plug text-indigo-500"></i> Input/Output Pins (GPIO)</h4>
+                                <p class="text-sm text-slate-500">Used to read sensors and control motors/LEDs.</p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-stopwatch text-indigo-500"></i> Timers & PWM</h4>
+                                <p class="text-sm text-slate-500">For controlling motors and servos smoothly.</p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-wifi text-indigo-500"></i> Communication</h4>
+                                <p class="text-sm text-slate-500 mb-1">I2C, SPI, UART</p>
+                                <p class="text-xs text-slate-400">Used to connect to sensors, displays, etc.</p>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-900 mb-2 flex items-center gap-2"><i
+                                        class="fas fa-bolt text-indigo-500"></i> Power Regulation</h4>
+                                <p class="text-sm text-slate-500">Allows the chip to work at stable voltage (3.3V or
+                                    5V).</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Common Types of Microcontrollers</h3>
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                            <div class="flex flex-wrap gap-3">
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">Arduino
+                                    (ATmega328P/2560)</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">ESP32</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">ESP8266</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">STM32</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">PIC
+                                    Microcontrollers</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">8051
+                                    Microcontrollers</span>
+                                <span
+                                    class="bg-white text-slate-700 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">Raspberry
+                                    Pi Pico (RP2040)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 4: ESP32 BLINK -->
+                <div id="page-subtask-4" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            4</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">ESP32 Quick-Start (Blink + Serial)</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none">
+                        <p class="text-lg text-slate-600 mb-6">
+                            This program is a basic LED-blinking example that proves whether the board, the pin
+                            configuration, and the Serial Monitor are working correctly. It uses the built-in LED and
+                            toggles it ON and OFF with a 1-second delay, while also printing the LED status to the
+                            Serial Monitor.
+                        </p>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                            <p class="text-sm text-blue-700"><strong>Note:</strong> If this simple code doesn’t work, it
+                                means the setup (board selection, port, or wiring) is wrong — not the logic.</p>
+                        </div>
+
+                        <div class="bg-slate-900 rounded-lg overflow-hidden shadow-lg mb-8">
+                            <div
+                                class="bg-slate-800 px-4 py-2 text-xs text-slate-400 border-b border-slate-700 flex justify-between">
+                                <span>Blink.ino</span>
+                                <span>Arduino C++</span>
+                            </div>
+                            <pre class="rounded-none m-0"><code class="language-cpp">void setup() {
+  pinMode(13, OUTPUT);            // Built-in LED pin
+  Serial.begin(9600);             // Start Serial Monitor
+}
+
+void loop() {
+  digitalWrite(13, HIGH);         // LED ON
+  Serial.println("LED is ON");
+  delay(1000);                    // 1 second delay
+
+  digitalWrite(13, LOW);          // LED OFF
+  Serial.println("LED is OFF");
+  delay(1000);                    // 1 second delay
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">Explanation</h3>
+
+                        <div class="space-y-6 mb-8">
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                                <h4 class="font-mono text-sm font-bold text-purple-600 mb-2">void setup() { ... }</h4>
+                                <p class="text-sm text-slate-600 mb-3">This runs one time when the board powers on or
+                                    resets.</p>
+                                <ul class="text-xs text-slate-500 space-y-2">
+                                    <li><code>pinMode(13, OUTPUT);</code> — Sets pin 13 (onboard LED) to send output.
+                                    </li>
+                                    <li><code>Serial.begin(9600);</code> — Starts serial communication at 9600 baud.
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                                <h4 class="font-mono text-sm font-bold text-green-600 mb-2">void loop() { ... }</h4>
+                                <p class="text-sm text-slate-600 mb-3">This runs again and again forever until the board
+                                    loses power.</p>
+                                <ul class="text-xs text-slate-500 space-y-2">
+                                    <li><code>digitalWrite(13, HIGH);</code> — Sends HIGH (5V) to pin 13 → LED turns ON.
+                                    </li>
+                                    <li><code>Serial.println("LED is ON");</code> — Sends message to Serial Monitor.
+                                    </li>
+                                    <li><code>delay(1000);</code> — Pauses for 1000 milliseconds = 1 second.</li>
+                                    <li><code>digitalWrite(13, LOW);</code> — Sends LOW (0V) to pin 13 → LED turns OFF.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+                            <div class="flex-1">
+                                <h4 class="font-bold text-slate-800 mb-2">What actually happens?</h4>
+                                <p class="text-sm text-slate-600 mb-4">It loops forever: LED ON → wait 1 sec → LED OFF →
+                                    wait 1 sec. Also prints ON/OFF messages.</p>
+
+                                <h5 class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-2">
+                                    Troubleshooting</h5>
+                                <ul class="text-xs text-slate-600 list-disc list-inside space-y-1">
+                                    <li>Wrong board selected in IDE.</li>
+                                    <li>Wrong COM port selected.</li>
+                                    <li>LED not on pin 13 (ESP32 often uses GPIO 2).</li>
+                                </ul>
+                            </div>
+                            <div
+                                class="flex flex-col items-center justify-center p-4 bg-white rounded-lg shadow-sm w-32">
+                                <div
+                                    class="w-4 h-4 rounded-full bg-red-500 animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)] mb-2">
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">LED BLINK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 5: FUSION 360 -->
+                <div id="page-subtask-5" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            5</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Fusion 360</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            Fusion 360 is a professional 3D CAD/CAM/CAE software used to design, simulate, and
+                            manufacture mechanical parts and products. It’s not a toy app — it’s used in industry for
+                            real engineering work.
+                        </p>
+
+                        <div
+                            class="bg-gradient-to-r from-orange-50 to-white border border-orange-100 rounded-xl p-6 mb-8 shadow-sm">
+                            <h3 class="text-lg font-bold text-orange-900 mb-3 flex items-center gap-2">
+                                <i class="fas fa-question-circle"></i> Why people use it?
+                            </h3>
+                            <p class="text-sm text-orange-800 leading-relaxed">
+                                Because it combines <strong>design → simulation → manufacturing</strong> in one
+                                software. That saves time and reduces mistakes. Most beginners get overwhelmed because
+                                they try to use it like Blender — which is not the correct approach. It’s meant for
+                                engineering, precision, and real dimensions.
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Core Capabilities</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 not-prose mb-8">
+                            <div
+                                class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-blue-50 rounded-full flex items-center justify-center mb-3 text-blue-600">
+                                    <i class="fas fa-cube text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">3D Modeling</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Design parts</p>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-purple-50 rounded-full flex items-center justify-center mb-3 text-purple-600">
+                                    <i class="fas fa-flask text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">Simulation</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Test stress/load</p>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-orange-50 rounded-full flex items-center justify-center mb-3 text-orange-600">
+                                    <i class="fas fa-industry text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">CAM</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">CNC toolpaths</p>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-green-50 rounded-full flex items-center justify-center mb-3 text-green-600">
+                                    <i class="fas fa-drafting-compass text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">Drawing</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">Eng. drawings</p>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-xl border border-slate-200 text-center shadow-sm hover:shadow-md transition-all hover:-translate-y-1">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-red-50 rounded-full flex items-center justify-center mb-3 text-red-600">
+                                    <i class="fas fa-microchip text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">Electronics</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">PCB design</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-8 md:mt-10 mb-4 md:mb-6">Why is it required in industry?</h3>
+                        <div class="space-y-3">
+                            <!-- Item 1 -->
+                            <div
+                                class="flex items-center gap-3 md:gap-4 p-4 md:p-5 rounded-xl bg-white border border-slate-100 hover:border-indigo-200 hover:shadow-md transition-all">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 shrink-0 shadow-sm">
+                                    <i class="fas fa-stream text-base md:text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Complete Workflow (Idea → Product)</h4>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Companies need engineers who
+                                        can handle 3D design, stress testing, motion testing, and manufacturing
+                                        toolpaths in one environment.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 2 -->
+                            <div
+                                class="flex items-center gap-3 md:gap-4 p-4 md:p-5 rounded-xl bg-white border border-slate-100 hover:border-emerald-200 hover:shadow-md transition-all">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0 shadow-sm">
+                                    <i class="fas fa-money-bill-wave text-base md:text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Manufacturing Cost & Time</h4>
+                                    <p class="text-sm text-slate-600 leading-relaxed">If parts aren't designed for
+                                        manufacturability, money is wasted on CNC crashes, material waste, and
+                                        redesigns. Fusion simulates failures <em>before</em> production.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 3 -->
+                            <div
+                                class="flex items-center gap-3 md:gap-4 p-4 md:p-5 rounded-xl bg-white border border-slate-100 hover:border-blue-200 hover:shadow-md transition-all">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 shadow-sm">
+                                    <i class="fas fa-print text-base md:text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">3D Printing & CNC Standard</h4>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Factories expect engineers to
+                                        hand over STEP files, CNC toolpaths, and designs optimized for additive
+                                        manufacturing. Fusion exports all of these directly.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 4 -->
+                            <div
+                                class="flex items-center gap-3 md:gap-4 p-4 md:p-5 rounded-xl bg-white border border-slate-100 hover:border-amber-200 hover:shadow-md transition-all">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 shrink-0 shadow-sm">
+                                    <i class="fas fa-pencil-ruler text-base md:text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Engineering Drawings</h4>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Machine shops don't accept
+                                        "simple 3D models". They need proper drawings with tolerances, dimensions, and
+                                        surface finish notes.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 5 -->
+                            <div
+                                class="flex items-center gap-3 md:gap-4 p-4 md:p-5 rounded-xl bg-white border border-slate-100 hover:border-rose-200 hover:shadow-md transition-all">
+                                <div
+                                    class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-rose-100 flex items-center justify-center text-rose-600 shrink-0 shadow-sm">
+                                    <i class="fas fa-check-double text-base md:text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1 md:mb-1.5">Product Testing</h4>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Product failure after
+                                        manufacturing is a huge loss. Fusion simulates load, stress, heat, and motion to
+                                        fix issues before launch.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-slate-200">
+                            <h4 class="font-bold text-slate-800 mb-3 text-xs uppercase tracking-wide">Used In
+                                Industries:</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">Mechanical
+                                    Engineering</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">Product
+                                    Design</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">Automotive
+                                    & Aerospace</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">Robotics</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">CNC
+                                    Machining</span>
+                                <span
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-medium border border-slate-200">3D
+                                    Printing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 6: ROS2 -->
+                <div id="page-subtask-6" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            6</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">ROS2 Architecture</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            <strong>What is ROS2?</strong><br>
+                            ROS2 is not a programming language, not an operating system, and not magic “robot software.”
+                            It’s a middleware framework that makes multiple programs in a robot communicate and work
+                            together in a predictable, scalable way.
+                        </p>
+                        <p class="text-slate-600 mb-6">
+                            If you try to build a serious robot without something like ROS2, you end up with spaghetti
+                            code where every component talks to every other component directly — impossible to maintain
+                            and guaranteed to break as soon as the system grows. ROS2 fixes that problem.
+                        </p>
+
+                        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8">
+                            <h3 class="text-lg font-bold text-indigo-900 mb-3">Why ROS2 exists?</h3>
+                            <p class="text-sm text-indigo-800 mb-4">
+                                Robots need a lot of components running at the same time: camera input, lidar
+                                processing, mapping, localization, motion control, navigation, planning.
+                            </p>
+                            <p class="text-sm text-indigo-800">
+                                If each of these modules communicated manually, you'd drown in complexity. ROS2 creates
+                                standard communication patterns so each part can do its job without depending on how
+                                other parts are implemented.
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">What ROS2 Actually Provides</h3>
+                        <div class="overflow-x-auto rounded-lg border border-slate-200 mb-8">
+                            <table class="modern-table text-sm w-full">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="w-1/4">Feature</th>
+                                        <th>Why it matters</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Nodes</td>
+                                        <td>Break logic into modular programs</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Topics</td>
+                                        <td>Share streaming data (sensor → processing → control)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Messages</td>
+                                        <td>Define exact data formats across the system</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Services</td>
+                                        <td>Request/response — like function calls between nodes</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Actions</td>
+                                        <td>Long-running tasks — like “navigate to this point”</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">Parameters</td>
+                                        <td>Runtime configuration without modifying code</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-blue-600">DDS</td>
+                                        <td>Handles networking, reliability, QoS</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-sm text-slate-500 italic mb-8">This is why advanced robots use ROS2 instead of
+                            custom code hacks.</p>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">The Uncomfortable Truth</h3>
+                        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-8">
+                            <p class="text-sm text-red-700">
+                                If someone just learns “how to write ROS2 code” without understanding why ROS2 exists,
+                                they’ll build fragile junk that only works in demo conditions.
+                            </p>
+                        </div>
+                        <p class="text-slate-600 mb-4">People who understand the architecture can scale from:</p>
+                        <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 mb-6 pl-4">
+                            <li>toy bot → industrial robot</li>
+                            <li>single IMU → 20+ sensors</li>
+                            <li>local PC → distributed multi-machine network</li>
+                        </ul>
+                        <p class="text-slate-600 font-medium">So don’t memorize commands — understand the structure.</p>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Mastering ROS2: The Minimum Concepts</h3>
+                        <ol
+                            class="list-decimal list-inside text-sm text-slate-600 space-y-2 mb-8 bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <li><strong>Nodes</strong></li>
+                            <li><strong>Topics + Messages</strong></li>
+                            <li><strong>QoS (Quality of Service)</strong> — absolutely essential for real robots</li>
+                            <li><strong>Services vs Actions</strong> (when to use which)</li>
+                            <li><strong>TF (coordinate transform system)</strong> — robots <em>die</em> without it</li>
+                            <li><strong>Lifecycle nodes</strong> — for professional-grade robots</li>
+                        </ol>
+                        <p class="text-xs text-slate-500 mb-8">If you skip steps, you’ll struggle later and waste time.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-8 not-prose">
+                            <div>
+                                <h4 class="font-bold text-slate-800 mb-3">Why Industry Needs It</h4>
+                                <p class="text-sm text-slate-600 mb-4">Robots in companies are complex systems. If every
+                                    part talks through custom code, maintenance is impossible. ROS2 fixes that by giving
+                                    a standard way for all components to communicate.</p>
+
+                                <h5 class="font-bold text-xs uppercase tracking-wide text-slate-500 mb-2">Industrial
+                                    Gains</h5>
+                                <ul class="list-disc list-inside text-xs text-slate-600 space-y-1">
+                                    <li>Add sensors without rewriting project</li>
+                                    <li>Run modules on multiple machines</li>
+                                    <li>Debug faster (modular)</li>
+                                    <li>Scale prototype to production</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-3">Where is it used?</h4>
+                                <div class="flex flex-wrap gap-2 text-xs">
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600">Autonomous
+                                        Mobile Robots (AMRs)</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600">Drones</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600">Self-driving
+                                        Vehicles</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600">Industrial
+                                        Arms</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600">Home/Consumer
+                                        Robots</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 7: GAZEBO -->
+                <div id="page-subtask-7" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            7</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Gazebo Simulation</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            To learn how to simulate a fully functional robot in a virtual world using Gazebo —
+                            including sensors, physics, ROS2 communication, and control — so that robot algorithms
+                            (navigation, perception, manipulation, etc.) can be tested and improved safely before using
+                            real hardware.
+                        </p>
+
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
+                            <h3 class="text-xl font-bold text-blue-900 mb-2">What is Gazebo?</h3>
+                            <p class="text-blue-800">
+                                Gazebo is a 3D robot simulation software used to test robots in virtual environments
+                                before building them in real life. It works closely with ROS2, allowing you to simulate
+                                sensors, actuators, physics, and robot movement.
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Why do we use Gazebo?</h3>
+                        <ul class="space-y-3 text-slate-600 mb-8 list-none pl-0">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>To test robots without spending money on hardware.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>To avoid damaging expensive robots during experiments.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>To check sensor accuracy, camera feeds, and mobility.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>To create realistic environments like farms, orchards, warehouses, roads,
+                                    etc.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                <span>To test algorithms (navigation, perception, picking, etc.) before
+                                    deployment.</span>
+                            </li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Key Features</h3>
+                        <div class="grid grid-cols-2 gap-4 not-prose mb-8">
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                    <i class="fas fa-atom"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Realistic Physics Engine</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Sensor Simulation</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                    <i class="fas fa-tree"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Environment Creation</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Integration with ROS2</span>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-6">Basic Workflow in Gazebo</h3>
+                        <div class="space-y-0 relative border-l-2 border-slate-200 ml-3 pl-8 pb-4">
+                            <!-- Step 1 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Launch Gazebo</h4>
+                                <p class="text-slate-600 text-sm mt-1">Open your world environment.</p>
+                            </div>
+                            <!-- Step 2 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Load Robot Model</h4>
+                                <p class="text-slate-600 text-sm mt-1">Using URDF or SDF files.</p>
+                            </div>
+                            <!-- Step 3 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Add Sensors</h4>
+                                <p class="text-slate-600 text-sm mt-1">Camera, LiDAR, ultrasonic, etc.</p>
+                            </div>
+                            <!-- Step 4 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Spawn Environment Objects</h4>
+                                <p class="text-slate-600 text-sm mt-1">Trees, fruits, obstacles, paths.</p>
+                            </div>
+                            <!-- Step 5 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Connect ROS2 Nodes</h4>
+                                <p class="text-slate-600 text-sm mt-1">Read topics like /camera/image, /sensor/imu.</p>
+                            </div>
+                            <!-- Step 6 -->
+                            <div class="mb-8 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-indigo-600 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Control Robot</h4>
+                                <p class="text-slate-600 text-sm mt-1">Using ROS2 publishers & controllers.</p>
+                            </div>
+                            <!-- Step 7 -->
+                            <div class="mb-0 relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-green-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800 text-lg">Test, Debug, Improve</h4>
+                                <p class="text-slate-600 text-sm mt-1">Motion, sensing, picking, navigation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 8: COPPELIASIM -->
+                <div id="page-subtask-8" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            8</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">CoppeliaSim</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            To understand how to design, simulate, and control robots in a virtual 3D environment using
+                            CoppeliaSim, and to apply robotics concepts such as motion control, sensors, and automation
+                            without requiring physical hardware.
+                        </p>
+
+                        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-6 mb-8 rounded-r-lg">
+                            <h3 class="text-xl font-bold text-indigo-900 mb-2">What is CoppeliaSim?</h3>
+                            <p class="text-indigo-800">
+                                CoppeliaSim is a 3D robot simulation software used to design, program, and test robots
+                                in a virtual environment. It allows you to create robots, add sensors, write control
+                                algorithms, and observe the robot’s behavior without using real hardware.
+                            </p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8 not-prose mb-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-800 mb-4">Why is CoppeliaSim used?</h3>
+                                <ul class="space-y-3 text-slate-600">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <span>To test robots safely before building them in real life.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <span>To save time and cost by avoiding hardware damage during
+                                            trial-and-error.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <span>To practice robotics concepts such as movement, sensors, path planning,
+                                            and automation.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <span>To connect with real programming tools (Python, C++, MATLAB, ROS, etc.)
+                                            for advanced control.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <h3 class="text-xl font-bold text-slate-800 mb-4">Where is it used?</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600 text-sm">Robotics
+                                        laboratories</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600 text-sm">Engineering
+                                        education</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600 text-sm">Industrial
+                                        automation prototyping</span>
+                                    <span
+                                        class="px-3 py-1 bg-white border border-slate-200 rounded-full shadow-sm text-slate-600 text-sm">Research
+                                        in AI, robotics, and control systems</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Key Features</h3>
+                        <div class="grid grid-cols-2 gap-4 not-prose">
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Realistic physics engine</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Mobile robots & arms simulation</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <span class="font-bold text-slate-700"> diverse sensors (LiDAR, Ultrasonic, etc.)</span>
+                            </div>
+                            <div
+                                class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">API support (Python, C++, ROS)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 9: EDGE IMPULSE -->
+                <div id="page-subtask-9" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            9</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Edge Impulse (TinyML)</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            To understand how to build and deploy machine-learning models on small embedded devices
+                            using Edge Impulse by collecting sensor data, training an AI model, and running it directly
+                            on hardware such as Arduino, ESP32, or Raspberry Pi without needing cloud processing.
+                        </p>
+
+                        <div class="bg-teal-50 border-l-4 border-teal-500 p-6 mb-8 rounded-r-lg">
+                            <h3 class="text-xl font-bold text-teal-900 mb-2">What is Edge Impulse?</h3>
+                            <p class="text-teal-800">
+                                Edge Impulse is a platform that lets you build machine-learning models specifically for
+                                small hardware devices like Arduino, ESP32, Raspberry Pi, Jetson Nano, and other
+                                embedded boards. It takes data from sensors (camera, microphone, accelerometer,
+                                temperature, etc.) and converts that data into an AI model that can run directly on the
+                                device. In simple terms, it brings AI to low-power electronics instead of big computers
+                                or cloud servers.
+                            </p>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-6">How does Edge Impulse work?</h3>
+                        <div class="relative border-l-2 border-slate-200 ml-3 pl-8 pb-4 space-y-8">
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-teal-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800">1. Collect Data</h4>
+                                <p class="text-sm text-slate-600">Sensor data is collected inside Edge Impulse (images,
+                                    audio, motion, etc.).</p>
+                            </div>
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-teal-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800">2. Extract Features</h4>
+                                <p class="text-sm text-slate-600">The data is cleaned, labelled, and features are
+                                    extracted (important patterns).</p>
+                            </div>
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-teal-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800">3. Train Model</h4>
+                                <p class="text-sm text-slate-600">A machine-learning model is trained automatically
+                                    using that processed data.</p>
+                            </div>
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-teal-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800">4. Deploy</h4>
+                                <p class="text-sm text-slate-600">The trained model is exported and installed on the
+                                    target device.</p>
+                            </div>
+                            <div class="relative">
+                                <div
+                                    class="absolute -left-[41px] top-0 w-6 h-6 rounded-full bg-green-500 border-4 border-white shadow-sm">
+                                </div>
+                                <h4 class="font-bold text-slate-800">5. Inference</h4>
+                                <p class="text-sm text-slate-600">The device starts making predictions in real time —
+                                    for example detecting gestures, recognizing keywords, spotting objects, or sensing
+                                    abnormal vibration — without needing the internet.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">Why is it important?</h3>
+                        <p class="text-slate-600 mb-4">
+                            It allows AI to run locally on tiny devices. That means faster processing, lower electricity
+                            use, better privacy, and no dependency on Wi-Fi or cloud servers.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-8 not-prose mb-8">
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wide">Popular Uses
+                                </h4>
+                                <ul class="space-y-2 text-sm text-slate-600">
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-hand-paper text-teal-500 w-4"></i> Gesture and motion control
+                                    </li>
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-microphone text-teal-500 w-4"></i> Voice command detection
+                                    </li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-camera text-teal-500 w-4"></i>
+                                        Object detection</li>
+                                    <li class="flex items-center gap-2"><i class="fas fa-tools text-teal-500 w-4"></i>
+                                        Predictive maintenance</li>
+                                    <li class="flex items-center gap-2"><i
+                                            class="fas fa-heartbeat text-teal-500 w-4"></i> Health monitoring</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-3 text-sm uppercase tracking-wide">Industrial
+                                    Requirement</h4>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    Modern industries need AI solutions that work on-site without relying on the
+                                    internet. Machines, robots, and sensors must detect faults, recognize patterns, and
+                                    make decisions instantly with low power and high reliability. Edge Impulse enables
+                                    this by running machine-learning models directly on devices used in factories,
+                                    automation systems, wearables, and IoT equipment.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBTASK 10: REQUIREMENTS -->
+                <div id="page-subtask-10" class="content-view">
+                    <div class="mb-8 border-b border-gray-200 pb-4">
+                        <span class="text-sm font-bold text-indigo-500 uppercase tracking-wider">Task 1 - Subtask
+                            10</span>
+                        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">Requirement Analysis</h1>
+                    </div>
+
+                    <div class="prose prose-slate max-w-none mb-8">
+                        <p class="text-lg text-slate-600 mb-6">
+                            The Fruit-Plucking Robot is designed to automatically detect ripe fruits (yellow), pluck
+                            them safely, and ignore unripe fruits (green). This document defines all major constraints
+                            affecting the system and the success metrics that determine project performance.
+                        </p>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">1. Constraints</h3>
+
+                        <h4 class="font-bold text-slate-700 text-sm mb-2">1.1 Hardware Constraints</h4>
+                        <div class="overflow-x-auto rounded-lg border border-slate-200 mb-6">
+                            <table class="modern-table text-sm w-full">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Constraint</th>
+                                        <th>Practical Impact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold">Color Sensor</td>
+                                        <td>Must differentiate yellow vs green under varying lighting</td>
+                                        <td>Requires calibration</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">Ultrasonic Sensor</td>
+                                        <td>Effective range ~2–400 cm</td>
+                                        <td>Limited detection distance</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">Servo / Motor</td>
+                                        <td>Limited torque and speed</td>
+                                        <td>Affects plucking reliability</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">Microcontroller</td>
+                                        <td>Limited processing power & RAM</td>
+                                        <td>Limits algorithm complexity</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold">Battery</td>
+                                        <td>Limited capacity</td>
+                                        <td>Reduces operating time</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-800 mb-2">1.2 Environmental Constraints</h4>
+                                <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                    <li>Lighting variations affect color detection.</li>
+                                    <li>Fruit shape, height, and size vary.</li>
+                                    <li>Wind causes moving branches.</li>
+                                    <li>Uneven terrain affects robot movement.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-800 mb-2">1.3 Operational Constraints</h4>
+                                <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                    <li>Must avoid damaging fruits and branches.</li>
+                                    <li>Movement and gripping speed must stay controlled.</li>
+                                    <li>Requires calibration before use.</li>
+                                    <li>Must avoid natural obstacles like branches and poles.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-800 mb-2">1.4 Software Constraints</h4>
+                                <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                    <li>Limited model storage (Edge Impulse).</li>
+                                    <li>Must run real-time logic with low latency.</li>
+                                    <li>ROS2 communication delays possible.</li>
+                                    <li>Physics in simulation is simplified compared to real world.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+                                <h4 class="font-bold text-slate-800 mb-2">1.5 Safety Constraints</h4>
+                                <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                    <li>Gripper must not crush fruit or injure humans.</li>
+                                    <li>Emergency stop required.</li>
+                                    <li>No exposed sharp components.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">2. Success Metrics</h3>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-8">
+                            <!-- 2.1 Detection Metrics -->
+                            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700 text-sm">
+                                    2.1 Detection Metrics</div>
+                                <table class="modern-table text-sm w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td>Ripe fruit detection accuracy</td>
+                                            <td class="font-bold text-green-600">≥ 90%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unripe fruit false-positive rate</td>
+                                            <td class="font-bold text-green-600">≤ 5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Color classification speed</td>
+                                            <td class="font-bold text-green-600">
+                                                < 1 second</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Distance estimation accuracy</td>
+                                            <td class="font-bold text-green-600">± 2 cm</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 2.2 Plucking Metrics -->
+                            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700 text-sm">
+                                    2.2 Plucking Metrics</div>
+                                <table class="modern-table text-sm w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td>Successful pluck rate</td>
+                                            <td class="font-bold text-blue-600">≥ 85%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fruit damage rate</td>
+                                            <td class="font-bold text-blue-600">≤ 5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Time per pluck</td>
+                                            <td class="font-bold text-blue-600">≤ 8 seconds</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grip motion</td>
+                                            <td class="font-bold text-blue-600">Smooth</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 2.3 Navigation Metrics -->
+                            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700 text-sm">
+                                    2.3 Navigation Metrics</div>
+                                <table class="modern-table text-sm w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td>Obstacle detection accuracy</td>
+                                            <td class="font-bold text-purple-600">≥ 95%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Path stability</td>
+                                            <td class="font-bold text-purple-600">No major deviation</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Terrain handling</td>
+                                            <td class="font-bold text-purple-600">Smooth</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 2.4 Reliability Metrics -->
+                            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700 text-sm">
+                                    2.4 Reliability Metrics</div>
+                                <table class="modern-table text-sm w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td>Continuous runtime</td>
+                                            <td class="font-bold text-orange-600">≥ 2 hours</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Calibration drift</td>
+                                            <td class="font-bold text-orange-600">Minimal</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Communication delay</td>
+                                            <td class="font-bold text-orange-600">
+                                                < 100 ms</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Battery performance</td>
+                                            <td class="font-bold text-orange-600">Sustainable</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 2.5 Simulation Metrics -->
+                            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden md:col-span-2">
+                                <div class="bg-slate-50 p-3 border-b border-slate-200 font-bold text-slate-700 text-sm">
+                                    2.5 Simulation Metrics</div>
+                                <div class="grid grid-cols-2 text-sm">
+                                    <div class="p-3 border-b border-r border-slate-100">Fruit detection in simulation
+                                    </div>
+                                    <div class="p-3 border-b border-slate-100 font-bold text-indigo-600">Works in all
+                                        test scenes</div>
+
+                                    <div class="p-3 border-b border-r border-slate-100">Arm motion</div>
+                                    <div class="p-3 border-b border-slate-100 font-bold text-indigo-600">Smooth, stable
+                                        IK movement</div>
+
+                                    <div class="p-3 border-b border-r border-slate-100">Collision avoidance</div>
+                                    <div class="p-3 border-b border-slate-100 font-bold text-indigo-600">Zero unintended
+                                        collisions</div>
+
+                                    <div class="p-3 border-r border-slate-100">Program execution</div>
+                                    <div class="p-3 font-bold text-indigo-600">No errors or crashes</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mt-8 mb-4">3. Acceptance Criteria</h3>
+                        <div class="bg-green-50 border border-green-100 rounded-xl p-6">
+                            <p class="text-sm text-green-800 font-medium mb-3">The robot will be considered successful
+                                when:</p>
+                            <ol class="list-decimal list-inside text-sm text-green-700 space-y-2">
+                                <li>It detects ripe fruits with <strong>≥ 90% accuracy</strong>.</li>
+                                <li>Plucks without damage (<strong>≤ 5% damaged fruits</strong>).</li>
+                                <li>Ignores unripe fruits consistently.</li>
+                                <li>Completes a full plucking cycle within the time limit.</li>
+                                <li>Sensors and actions work reliably in field conditions.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </main>
+
+    <script>
+        // Navigation Structure
+        const navData = [
+            { id: 'overview', label: 'Domain Overview', icon: 'fas fa-home' },
+            {
+                id: 'task-1',
+                label: 'Task 1',
+                icon: 'fas fa-clipboard-check',
+                children: [
+                    { id: 'subtask-1', label: '1. Fundamentals' },
+                    { id: 'subtask-2', label: '2. Sensors' },
+                    { id: 'subtask-3', label: '3. Microcontrollers' },
+                    { id: 'subtask-4', label: '4. ESP32 Blink' },
+                    { id: 'subtask-5', label: '5. Fusion 360' },
+                    { id: 'subtask-6', label: '6. ROS2' },
+                    { id: 'subtask-7', label: '7. Gazebo' },
+                    { id: 'subtask-8', label: '8. CoppeliaSim' },
+                    { id: 'subtask-9', label: '9. Edge Impulse' },
+                    { id: 'subtask-10', label: '10. Requirements' },
+                ]
+            }
+        ];
+
+        // Render Navigation
+        function renderNav(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+
+            navData.forEach(item => {
+                if (item.children) {
+                    // Parent Item (Accordion)
+                    const groupDiv = document.createElement('div');
+                    groupDiv.className = 'mb-1';
+
+                    const parentBtn = document.createElement('button');
+                    parentBtn.className = 'w-full flex items-center justify-between px-3 py-2.5 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors';
+                    parentBtn.onclick = () => toggleSubmenu(item.id);
+
+                    const leftContent = document.createElement('div');
+                    leftContent.className = 'flex items-center gap-3';
+                    leftContent.innerHTML = `<i class="${item.icon} w-5 text-center text-slate-400"></i><span>${item.label}</span>`;
+
+                    const chevron = document.createElement('i');
+                    chevron.className = 'fas fa-chevron-down text-xs text-slate-400 chevron';
+                    chevron.id = `chevron-${item.id}`;
+
+                    parentBtn.appendChild(leftContent);
+                    parentBtn.appendChild(chevron);
+                    groupDiv.appendChild(parentBtn);
+
+                    // Submenu
+                    const submenuDiv = document.createElement('div');
+                    submenuDiv.id = `submenu-${item.id}`;
+                    submenuDiv.className = 'submenu ml-9 border-l border-slate-200 pl-3 space-y-1 mt-1';
+
+                    item.children.forEach(child => {
+                        const link = document.createElement('a');
+                        link.className = 'block py-2 text-sm text-slate-500 hover:text-blue-600 hover:translate-x-1 transition-all cursor-pointer nav-link';
+                        link.id = `link-${child.id}`;
+                        link.textContent = child.label;
+                        link.onclick = () => {
+                            navigateToTask(child.id);
+                            // Close mobile drawer if open
+                            const drawer = document.getElementById('mobile-drawer');
+                            if (!drawer.classList.contains('hidden')) toggleDrawer(false);
+                        };
+                        submenuDiv.appendChild(link);
+                    });
+
+                    groupDiv.appendChild(submenuDiv);
+                    container.appendChild(groupDiv);
+                } else {
+                    // Direct Link
+                    const link = document.createElement('a');
+                    link.className = 'flex items-center gap-3 px-3 py-2.5 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors cursor-pointer nav-link';
+                    link.id = `link-${item.id}`;
+                    link.innerHTML = `<i class="${item.icon} w-5 text-center text-slate-400"></i><span>${item.label}</span>`;
+                    link.onclick = () => {
+                        navigateToTask(item.id);
+                        const drawer = document.getElementById('mobile-drawer');
+                        if (!drawer.classList.contains('hidden')) toggleDrawer(false);
+                    };
+                    container.appendChild(link);
+                }
+            });
+        }
+
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(`submenu-${id}`);
+            const chevron = document.getElementById(`chevron-${id}`);
+            submenu.classList.toggle('open');
+            chevron.classList.toggle('rotate');
+        }
+
+        // View Switching Logic
+        function navigateToTask(viewId) {
+            // Hide all views
+            document.querySelectorAll('.content-view').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // Show target view
+            const target = document.getElementById(`page-${viewId}`);
+            if (target) {
+                target.classList.add('active');
+                // Scroll to top
+                document.getElementById('main-content').scrollTop = 0;
+            }
+
+            // Update Active Link State
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active', 'text-blue-600', 'bg-blue-50', 'font-bold');
+                link.classList.add('text-slate-500');
+            });
+
+            const activeLink = document.getElementById(`link-${viewId}`);
+            if (activeLink) {
+                activeLink.classList.add('active', 'text-blue-600', 'bg-blue-50', 'font-bold');
+                activeLink.classList.remove('text-slate-500');
+            }
+
+            // Expand Task 1 accordion if navigating to a subtask from overview
+            if (viewId.startsWith('subtask-')) {
+                const submenu = document.getElementById('submenu-task-1');
+                if (!submenu.classList.contains('open')) {
+                    toggleSubmenu('task-1');
+                }
+            }
+        }
+
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const body = document.body;
+            const expandBtn = document.getElementById('sidebar-expander');
+            body.classList.toggle('sidebar-closed');
+
+            if (body.classList.contains('sidebar-closed')) {
+                expandBtn.classList.remove('hidden');
+            } else {
+                expandBtn.classList.add('hidden');
+            }
+        }
+
+        // Mobile Menu
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const closeDrawer = document.getElementById('close-drawer');
+        const drawer = document.getElementById('mobile-drawer');
+        const drawerContent = document.getElementById('drawer-content');
+
+        function toggleDrawer(show) {
+            const mobileToggle = document.getElementById('mobile-menu-toggle');
+            if (show) {
+                drawer.classList.remove('hidden');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                setTimeout(() => drawerContent.classList.remove('-translate-x-full'), 10);
+                // Trap focus in drawer
+                document.getElementById('close-drawer').focus();
+            } else {
+                drawerContent.classList.add('-translate-x-full');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                setTimeout(() => drawer.classList.add('hidden'), 300);
+                // Return focus to toggle button
+                mobileToggle.focus();
+            }
+        }
+
+        mobileToggle.addEventListener('click', () => toggleDrawer(true));
+        closeDrawer.addEventListener('click', () => toggleDrawer(false));
+        drawer.addEventListener('click', (e) => {
+            if (e.target === drawer) toggleDrawer(false);
+        });
+
+        // Initialize
+        renderNav('desktop-nav');
+        renderNav('mobile-nav');
+        // Default View
+        navigateToTask('overview');
+
+    </script>
+</body>
+
+</html>
